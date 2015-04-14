@@ -35,3 +35,8 @@ Max Subsequence:
 Find the subsequence in an integer array that has the largest summation.
 
 --------------------------------------------------------------------------------
+Number of All Wrong Permutations:
+
+Count the number of all wrong permutations.
+
+--------------------------------------------------------------------------------
