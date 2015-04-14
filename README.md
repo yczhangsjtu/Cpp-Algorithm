@@ -25,4 +25,8 @@ Bit Int:
 An implementation of unlimit size integer class.
 
 --------------------------------------------------------------------------------
+Inverse:
 
+Merge sort counting the number of inverses.
+
+--------------------------------------------------------------------------------
