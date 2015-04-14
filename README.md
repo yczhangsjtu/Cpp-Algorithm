@@ -20,3 +20,9 @@ Date:
 A one-to-one correlation between dates and integers in a large scale.
 
 --------------------------------------------------------------------------------
+Bit Int:
+
+An implementation of unlimit size integer class.
+
+--------------------------------------------------------------------------------
+
