@@ -43,3 +43,8 @@ Count the number of all wrong permutations.
 Fibonacci
 
 --------------------------------------------------------------------------------
+Triangle:
+
+Judge properties of a triangle.
+
+--------------------------------------------------------------------------------
