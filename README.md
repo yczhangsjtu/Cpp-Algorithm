@@ -48,3 +48,8 @@ Triangle:
 Judge properties of a triangle.
 
 --------------------------------------------------------------------------------
+Trie Tree:
+
+A special tree for looking up English dictionary.
+
+--------------------------------------------------------------------------------
