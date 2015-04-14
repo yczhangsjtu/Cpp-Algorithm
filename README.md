@@ -15,3 +15,8 @@ For example, s=a0, s1=0123456789abcdef, s2=0123456789,
 this is simply translation from hex to decimal.
 
 --------------------------------------------------------------------------------
+Date:
+
+A one-to-one correlation between dates and integers in a large scale.
+
+--------------------------------------------------------------------------------
