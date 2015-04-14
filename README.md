@@ -30,3 +30,8 @@ Inverse:
 Merge sort counting the number of inverses.
 
 --------------------------------------------------------------------------------
+Max Subsequence:
+
+Find the subsequence in an integer array that has the largest summation.
+
+--------------------------------------------------------------------------------
