@@ -58,3 +58,36 @@ Find Maximal Sum Submatrix:
 Input a matrix, find the submatrix of given size that has maximal summation.
 
 --------------------------------------------------------------------------------
+Fill the box:
+
+Something in a square grid box spread one step at a time.
+How long does it take to fill a box?
+
+--------------------------------------------------------------------------------
+Find max subsequence II:
+
+Find max subsequence that has at least two elements.
+
+--------------------------------------------------------------------------------
+Summation of Money:
+
+Use integers to sum two two-digits floats.
+
+--------------------------------------------------------------------------------
+Count days:
+
+Count the number of days in a period of time that is not Saturday, Sunday,
+National Day, Labour's Day, or New Year's Day.
+
+--------------------------------------------------------------------------------
+Complex Number:
+
+Complex number class.
+
+--------------------------------------------------------------------------------
+Infinite Knapsack problem
+
+--------------------------------------------------------------------------------
+Infinite addition
+
+--------------------------------------------------------------------------------
