@@ -53,3 +53,8 @@ Trie Tree:
 A special tree for looking up English dictionary.
 
 --------------------------------------------------------------------------------
+Find Maximal Sum Submatrix:
+
+Input a matrix, find the submatrix of given size that has maximal summation.
+
+--------------------------------------------------------------------------------
