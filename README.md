@@ -97,3 +97,8 @@ Infinite multiplication
 Parenthesis match
 
 --------------------------------------------------------------------------------
+if then else begin end
+
+Judge if a sequence of "if then else begin end" is legal.
+
+--------------------------------------------------------------------------------
