@@ -129,3 +129,8 @@ Sparse Matrix:
 Read a sparse matrix, do some row and column exchange, query some elements.
 
 --------------------------------------------------------------------------------
+KMP Algorithm:
+
+Algorithm to search all the occurrences of a substring in a larger string.
+
+--------------------------------------------------------------------------------
