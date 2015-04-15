@@ -102,3 +102,8 @@ if then else begin end
 Judge if a sequence of "if then else begin end" is legal.
 
 --------------------------------------------------------------------------------
+Time in line:
+
+Count the number of minutes people have to wait in line.
+
+--------------------------------------------------------------------------------
