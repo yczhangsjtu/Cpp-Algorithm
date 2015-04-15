@@ -107,3 +107,25 @@ Time in line:
 Count the number of minutes people have to wait in line.
 
 --------------------------------------------------------------------------------
+Max number of Bit-Small match:
+
+Input two sequences An and Bn, find the maximal number of pairs (ak,bk)
+such that ak > bk.
+
+--------------------------------------------------------------------------------
+Binary Tree in array:
+
+Calculate the position of an element in a binary tree stored in array.
+Post-order traverse.
+
+--------------------------------------------------------------------------------
+Stack Change Order:
+
+Given a stack of limited size, decide whether a pop order is possible.
+
+--------------------------------------------------------------------------------
+Sparse Matrix:
+
+Read a sparse matrix, do some row and column exchange, query some elements.
+
+--------------------------------------------------------------------------------
