@@ -134,3 +134,6 @@ KMP Algorithm:
 Algorithm to search all the occurrences of a substring in a larger string.
 
 --------------------------------------------------------------------------------
+AVL Tree
+
+--------------------------------------------------------------------------------
