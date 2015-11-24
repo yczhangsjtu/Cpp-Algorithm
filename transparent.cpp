@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <unistd.h>
@@ -23,8 +24,8 @@ int main(int argc, char *argv[])
 	unsigned char *data = NULL, *ndata = NULL;
 	char inputBuf[256];
 	char outputBuf[256];
-	unsigned char r = 0, g = 0, b = 0;
-	while((ch = getopt(argc,argv,"i:o:r:g:b:"))!=-1)
+	unsigned char r = 0, g = 0, b = 0, err = 0;
+	while((ch = getopt(argc,argv,"i:o:r:g:b:e:"))!=-1)
 	{
 		switch(ch)
 		{
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 		case 'r': r = atoi(optarg); break;
 		case 'g': g = atoi(optarg); break;
 		case 'b': b = atoi(optarg); break;
+		case 'e': err = atoi(optarg); break;
 		}
 	}
 	
@@ -54,7 +56,9 @@ int main(int argc, char *argv[])
 			ndata[offset] = data[i*3];
 			ndata[offset+1] = data[i*3+1];
 			ndata[offset+2] = data[i*3+2];
-			if(ndata[offset] == r && ndata[offset+1] == g && ndata[offset+2] == b)
+			if(abs((char)(ndata[offset])-(char)r)
+			  +abs((char)(ndata[offset+1])-(char)g)
+			  +abs((char)(ndata[offset+2])-(char)b) <= err)
 				ndata[offset+3] = 0;
 			else
 				ndata[offset+3] = 255;
@@ -68,7 +72,9 @@ int main(int argc, char *argv[])
 		for(int i = 0; i < N; i++)
 		{
 			int offset = i*4;
-			if(data[offset] == r && data[offset+1] == g && data[offset+2] == b)
+			if(abs((char)(data[offset])-(char)r)
+			  +abs((char)(data[offset+1])-(char)g)
+			  +abs((char)(data[offset+2])-(char)b) <= err)
 			{
 				data[offset] = 255;
 				data[offset+1] = 255;
