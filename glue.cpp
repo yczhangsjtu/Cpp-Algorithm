@@ -12,7 +12,7 @@ using namespace std;
 
 void usage()
 {
-	fprintf(stderr,"Usage: glue -i inputfile1 -j inputfile2 -o outputfile [-n Repeat number]\n");
+	fprintf(stderr,"Usage: glue -i inputfile1 -j inputfile2 -o outputfile [-v]\n");
 	exit(1);
 }
 
