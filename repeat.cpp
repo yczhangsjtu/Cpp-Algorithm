@@ -5,8 +5,8 @@
 #include <unistd.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb-master\stb_image.h"
-#include "stb-master\stb_image_write.h"
+#include "stb-master/stb_image.h"
+#include "stb-master/stb_image_write.h"
 
 using namespace std;
 
