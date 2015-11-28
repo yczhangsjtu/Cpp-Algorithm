@@ -12,7 +12,7 @@ using namespace std;
 
 void usage()
 {
-	fprintf(stderr,"Usage: trans -i inputfile -o outputfile [-r int][-g int][-b\
+	fprintf(stderr,"Usage: replacecolor -i inputfile -o outputfile [-r int][-g int][-b\
 	int][-R int][-G int][-B int][-e error]\n");
 	exit(1);
 }
