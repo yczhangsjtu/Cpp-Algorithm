@@ -12,7 +12,7 @@ using namespace std;
 
 void usage()
 {
-	fprintf(stderr,"Usage: trans -i inputfile -o outputfile [-n Repeat number]\n");
+	fprintf(stderr,"Usage: repeat -i inputfile -o outputfile [-n Repeat number]\n");
 	exit(1);
 }
 
