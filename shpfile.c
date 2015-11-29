@@ -176,7 +176,7 @@ Image *load(const char *input, const char *palatte, int *n)
 	BYTE *imageData = NULL;
 	
 	file = fopen(palatte, "rb");
-	if(!file) perror(input);
+	if(!file) perror(palatte);
 	fread((BYTE*)defaultPalatte,3*sizeof(BYTE),256,file);
 	fclose(file);
 
