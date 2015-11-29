@@ -457,38 +457,28 @@ static PyObject *
 shpload(PyObject *self, PyObject *args)
 {
 	const char *input, *pal;
-	int n, p, i, j;
+	int n, i;
 	Image *output;
-	char *buffer = NULL;
-	PyObject *res = NULL;
+	PyObject *pyList = NULL, *item = NULL;
 	if(!PyArg_ParseTuple(args,"ss",&input,&pal))
 		return NULL;
 	output = load(input,pal,&n);
 	if(n == 0) return Py_BuildValue("");
-	buffer = malloc((8*output[0].w*output[0].h+2)*n+2);
-	p = 0;
-	buffer[p++] = '[';
+	pyList = PyList_New(n+1);
+	item = PyTuple_New(2);
+	PyTuple_SetItem(item,0,PyInt_FromLong(output[0].w));
+	PyTuple_SetItem(item,1,PyInt_FromLong(output[0].h));
+	PyList_SetItem(pyList,0,item);
 	for(i = 0; i < n; i++)
 	{
-		buffer[p++] = '[';
-		for(j = 0; j < 4 * output[i].w * output[i].h - 1; j++)
-		{
-			buffer[p++] = 'B';
-			buffer[p++] = ',';
-		}
-		buffer[p++] = 'B';
-		buffer[p++] = ']';
-		if(i < n-1) buffer[p++] = ',';
+		item = PyByteArray_FromStringAndSize((char*)(output[i].data),
+			output[i].w * output[i].h * 4);
+		PyList_SetItem(pyList,i+1,item);
 	}
-	buffer[p++] = ']';
-	buffer[p] = '\0';
-	assert(p == (8*output[0].w*output[0].h+2)*n+2);
-	res = Py_BuildValue(buffer,output[i].data);
-	free(buffer);
 	for(i = 0; i < n; i++)
 		free(output[i].data);
 	free(output);
-	return res;
+	return pyList;
 }
 
 static PyMethodDef ShpMethods[] = {
