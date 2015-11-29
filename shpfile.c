@@ -199,29 +199,37 @@ Image *load(const char *input, const char *palatte, int *n)
 	for(i = 0; i < fileHeader.num; i++)
 		fread(&imageDatas[i].header, sizeof(ImageHeader), 1, file);
 	
+	
 	*n = fileHeader.num;
 	output = (Image*)malloc((*n) * sizeof(Image));
-	
-	for(i = 0; i < fileHeader.num; i++)
+
+	for(i = 0; i < *n; i++)
 	{
 		output[i].w = fileHeader.width;
 		output[i].h = fileHeader.height;
-
 		pImageHeader = &imageDatas[i].header;
 		
 		if(pImageHeader->compression == 1)
 			imageSize = pImageHeader->w * pImageHeader->h;
 		else
 		{
-			if(i == fileHeader.num - 1)
+			if(i == *n - 1)
 			{
 				fseek(file,0L,SEEK_END);
 				imageSize = ftell(file) - pImageHeader->offset;
 			}
 			else
+			{
 				imageSize = imageDatas[i+1].header.offset - pImageHeader->offset;
+				if(imageSize <= 0)
+				{
+					fseek(file,0L,SEEK_END);
+					imageSize = ftell(file) - pImageHeader->offset;
+					*n = i+1;
+				}
+			}
 		}
-		
+
 		fseek(file,pImageHeader->offset,SEEK_SET);
 		allocImageData(&imageDatas[i]);
 		imageData = (BYTE*)malloc(imageSize * sizeof(BYTE));
@@ -255,6 +263,8 @@ Image *load(const char *input, const char *palatte, int *n)
 		
 	for(i = 0; i < *n; i++)
 		freeImageData(&imageDatas[i]);
+	for(i = *n; i < *n; i++)
+		free(output[i].data);
 	free(imageDatas);
 	fclose(file);
 	
