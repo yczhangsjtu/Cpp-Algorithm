@@ -74,6 +74,7 @@ void decompress3(BYTE *dst, BYTE *src, WORD w, WORD h)
 		count = pos-2;
 		psrc += 2;
 		x = 0;
+		/*
 		if(debug)
 		{
 			printf("%d.%d: ",y,count);
@@ -81,6 +82,7 @@ void decompress3(BYTE *dst, BYTE *src, WORD w, WORD h)
 				printf("%x%x ",psrc[i]/16,psrc[i]%16);
 			printf("\n");
 		}
+		*/
 		for(i = 0; i < count; i++)
 		{
 			v = *psrc++;
@@ -377,7 +379,7 @@ int main(int argc, char *argv[])
 	FileHeader fileHeader;
 	ImageHeader *pImageHeader = NULL;
 	ImageData *imageDatas = NULL;
-	BYTE palatteBuf[768], *imageData = NULL, *data = NULL;
+	BYTE *imageData = NULL, *data = NULL;
 	
 	while(i < argc)
 	{
@@ -486,7 +488,15 @@ int main(int argc, char *argv[])
 				imageSize = ftell(file) - pImageHeader->offset;
 			}
 			else
+			{
 				imageSize = imageDatas[i+1].header.offset - pImageHeader->offset;
+				if(imageSize <= 0)
+				{
+					fseek(file,0L,SEEK_END);
+					imageSize = ftell(file) - pImageHeader->offset;
+					fileHeader.num = i+1;
+				}
+			}
 		}
 		
 		if(debug)
@@ -497,7 +507,7 @@ int main(int argc, char *argv[])
 		fseek(file,pImageHeader->offset,SEEK_SET);
 		allocImageData(&imageDatas[i]);
 		imageData = (BYTE*)malloc(imageSize * sizeof(BYTE));
-		WORD count = fread(imageData,sizeof(BYTE),imageSize,file);
+		fread(imageData,sizeof(BYTE),imageSize,file);
 		if(pImageHeader->compression == 1)
 			decompress1(imageDatas[i].data,imageData,pImageHeader->w,pImageHeader->h);
 		if(pImageHeader->compression == 2)
