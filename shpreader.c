@@ -371,7 +371,7 @@ int main(int argc, char *argv[])
 {
 	assert(sizeof(BYTE)==1 && sizeof(WORD)==2 && sizeof(LONGINT)==4);
 	
-	LONGINT i = 1, imageSize = 0, d, s, k, j, x, y, w, h, X, Y;
+	LONGINT i = 1, imageSize = 0, d, s, k, j, x, y, w, h, X, Y, n;
 	char input[MAX_FILE_NAME+1] = "";
 	char output[MAX_FILE_NAME+1] = "";
 	char palatte[MAX_FILE_NAME+1] = "";
@@ -448,6 +448,7 @@ int main(int argc, char *argv[])
 		printf("Image Height: %d\n",fileHeader.height);
 		printf("Image Number: %d\n",fileHeader.num);
 	}
+	n = fileHeader.num;
 	
 	if(!(fileHeader.width && fileHeader.height))
 		perror("Zero size.\n");
@@ -455,12 +456,12 @@ int main(int argc, char *argv[])
 	if(!fileHeader.num)
 		perror("Zero number of images.\n");
 	
-	imageDatas = (ImageData*)malloc(fileHeader.num * sizeof(ImageData));
+	imageDatas = (ImageData*)malloc(n * sizeof(ImageData));
 	
-	for(i = 0; i < fileHeader.num; i++)
+	for(i = 0; i < n; i++)
 		fread(&imageDatas[i].header, sizeof(ImageHeader), 1, file);
 	
-	for(i = 0; i < fileHeader.num; i++)
+	for(i = 0; i < n; i++)
 	{
 		pImageHeader = &imageDatas[i].header;
 		if(debug)
@@ -482,7 +483,7 @@ int main(int argc, char *argv[])
 			imageSize = pImageHeader->w * pImageHeader->h;
 		else
 		{
-			if(i == fileHeader.num - 1)
+			if(i == n - 1)
 			{
 				fseek(file,0L,SEEK_END);
 				imageSize = ftell(file) - pImageHeader->offset;
@@ -494,7 +495,7 @@ int main(int argc, char *argv[])
 				{
 					fseek(file,0L,SEEK_END);
 					imageSize = ftell(file) - pImageHeader->offset;
-					fileHeader.num = i+1;
+					n = i+1;
 				}
 			}
 		}
@@ -517,7 +518,7 @@ int main(int argc, char *argv[])
 		free(imageData);
 	}
 	
-	X = fileHeader.width * fileHeader.num;
+	X = fileHeader.width * n;
 	Y = fileHeader.height;
 	if(debug)
 	{
@@ -526,7 +527,7 @@ int main(int argc, char *argv[])
 	data = malloc(X * Y * 4);
 	if(!data) perror("Memory allocation failed.");
 	
-	for(k = 0; k < fileHeader.num; k++)
+	for(k = 0; k < n; k++)
 	{
 		x = imageDatas[k].header.x;
 		y = imageDatas[k].header.y;
