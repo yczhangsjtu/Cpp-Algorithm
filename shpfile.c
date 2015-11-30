@@ -234,12 +234,12 @@ Image *load(const char *input, const char *palatte, int *n)
 		allocImageData(&imageDatas[i]);
 		imageData = (BYTE*)malloc(imageSize * sizeof(BYTE));
 		fread(imageData,sizeof(BYTE),imageSize,file);
-		if(pImageHeader->compression == 1)
-			decompress1(imageDatas[i].data,imageData,pImageHeader->w,pImageHeader->h);
 		if(pImageHeader->compression == 2)
 			decompress2(imageDatas[i].data,imageData,pImageHeader->w,pImageHeader->h);
 		if(pImageHeader->compression == 3)
 			decompress3(imageDatas[i].data,imageData,pImageHeader->w,pImageHeader->h);
+		else
+			decompress1(imageDatas[i].data,imageData,pImageHeader->w,pImageHeader->h);
 
 		output[i].data = (BYTE*)malloc(output[i].w * output[i].h * 4);
 		x = imageDatas[i].header.x;
