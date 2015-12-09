@@ -76,9 +76,9 @@ int main(int argc,char *argv[])
         exit(0);
     }
     if(debug && !inf)
-        fprintf(stderr,"No input file specified, use stdin as input.");
+        fprintf(stderr,"No input file specified, use stdin as input.\n");
     if(debug && !outf)
-        fprintf(stderr,"No output file specified, use stdout as output.");
+        fprintf(stderr,"No output file specified, use stdout as output.\n");
 
     /*
     **Open files and check if the files are opened correctly.
