@@ -6,6 +6,11 @@ using namespace std;
 
 typedef set<int> Cand;
 
+const int finished   = 0;
+const int invalid    = -1;
+const int unchanged  = 1;
+const int unfinished = 2;
+
 Cand fullCand()
 {
 	Cand cand;
@@ -41,11 +46,14 @@ bool integerToCand(int I[9][9], Cand M[9][9])
 	return valid;
 }
 
-bool analyseCand(Cand M[9][9])
+int analyseCand(Cand M[9][9], bool quiet = false)
 {
+	int  it = -1;
 	bool changed = false;
+	
 	do
 	{
+	it ++;
 	changed = false;
 	for(int i0 = 0; i0 < 3; i0++)
 	{
@@ -74,15 +82,22 @@ bool analyseCand(Cand M[9][9])
 						{
 							if(M[k][j].empty())
 							{
-								cout << "Invalid case! Location " << k << "," << j
-									 << " has no candidate." << endl;
-								cout << "After erasing " << n << endl;
-								return false;
+								if(!quiet)
+								{
+									cout << "Invalid case! Location " << k
+										<< "," << j
+										<< " has no candidate." << endl;
+									cout << "After erasing " << n << endl;
+								}
+								return invalid;
 							}
 							if(M[k][j].size()==1)
 							{
-								cout << "Location " << k << "," << j << " is "
-									 << *M[k][j].begin() << endl;
+								if(!quiet)
+								{
+									cout << "Location " << k << "," << j 
+										<< " is " << *M[k][j].begin() << endl;
+								}
 							}
 							changed = true;
 							continue;
@@ -95,15 +110,22 @@ bool analyseCand(Cand M[9][9])
 						{
 							if(M[i][k].empty())
 							{
-								cout << "Invalid case! Location " << i << "," << k
-									 << " has no candidate." << endl;
-								cout << "After erasing " << n << endl;
-								return false;
+								if(!quiet)
+								{
+									cout << "Invalid case! Location " << i
+										<< "," << k << " has no candidate." 
+										<< endl;
+									cout << "After erasing " << n << endl;
+								}
+								return invalid;
 							}
 							if(M[i][k].size()==1)
 							{
-								cout << "Location " << i << "," << k << " is "
-									 << *M[i][k].begin() << endl;
+								if(!quiet)
+								{
+									cout << "Location " << i << "," << k
+										<< " is " << *M[i][k].begin() << endl;
+								}
 							}
 							changed = true;
 							continue;
@@ -123,16 +145,23 @@ bool analyseCand(Cand M[9][9])
 							{
 								if(M[ii][jj].empty())
 								{
-									cout << "Invalid case! Location " << ii 
+									if(!quiet)
+									{
+										cout << "Invalid case! Location " << ii 
 										 << "," << jj << " has no candidate."
 										 << endl;
-									cout << "After erasing " << n << endl;
-									return false;
+										cout << "After erasing " << n << endl;
+									}
+									return invalid;
 								}
 								if(M[ii][jj].size()==1)
 								{
-									cout << "Location " << ii << "," << jj
-										 << " is " << *M[ii][jj].begin() << endl;
+									if(!quiet)
+									{
+										cout << "Location " << ii << "," << jj
+										 << " is " << *M[ii][jj].begin()
+										 << endl;
+									}
 								}
 								changed = true;
 								continue;
@@ -164,15 +193,22 @@ bool analyseCand(Cand M[9][9])
 			}
 			if(sum==0)
 			{
-				cout << "Invalid case! Row " << i0 << " has no " << n << endl;
-				return false;
+				if(!quiet)
+				{
+					cout << "Invalid case! Row " << i0 << " has no " << n
+						<< endl;
+				}
+				return invalid;
 			}
 			else if(sum==1)
 			{
 				if(M[i0][j0].size()>1)
 				{
-					cout << "Location " << i0 << "," << j0 << " is "
-						 << n << endl;
+					if(!quiet)
+					{
+						cout << "Location " << i0 << "," << j0 << " is "
+							<< n << endl;
+					}
 					M[i0][j0] = singleCand(n);
 				}
 			}
@@ -191,15 +227,22 @@ bool analyseCand(Cand M[9][9])
 			}
 			if(sum==0)
 			{
-				cout << "Invalid case! Column " << j0 << " has no " << n << endl;
-				return false;
+				if(!quiet)
+				{
+					cout << "Invalid case! Column " << j0 << " has no "
+						<< n << endl;
+				}
+				return invalid;
 			}
 			else if(sum==1)
 			{
 				if(M[i0][j0].size()>1)
 				{
-					cout << "Location " << i0 << "," << j0 << " is "
-						 << n << endl;
+					if(!quiet)
+					{
+						cout << "Location " << i0 << "," << j0 << " is "
+							 << n << endl;
+					}
 					M[i0][j0] = singleCand(n);
 					changed = true;
 				}
@@ -231,16 +274,22 @@ bool analyseCand(Cand M[9][9])
 				}
 				if(sum==0)
 				{
-					cout << "Invalid case! Square " << i0 << "," << j0
-						 << " has no " << n << endl;
-					return false;
+					if(!quiet)
+					{
+						cout << "Invalid case! Square " << i0 << "," << j0
+							<< " has no " << n << endl;
+					}
+					return invalid;
 				}
 				else if(sum==1)
 				{
 					if(M[ii][jj].size()>1)
 					{
-						cout << "Location " << i0 << "," << j0 << " is "
-							 << n << endl;
+						if(!quiet)
+						{
+							cout << "Location " << i0 << "," << j0 << " is "
+								<< n << endl;
+						}
 						M[ii][jj] = singleCand(n);
 						changed = true;
 					}
@@ -249,9 +298,58 @@ bool analyseCand(Cand M[9][9])
 		}
 	}
 	
+	// By now nothing is changed, then guess
+	if(!changed)
+	{
+		Cand N[9][9];
+		
+		for(int i = 0; i < 9; i++)
+		{
+			for(int j = 0; j < 9; j++)
+			{
+				// More than one candidates
+				if(M[i][j].size() > 1)
+				{
+					Cand::iterator iter;
+					for(iter = M[i][j].begin(); iter != M[i][j].end(); iter++)
+					{
+						// First do the copy
+						for(int ii = 0; ii < 9; ii++)
+							for(int jj = 0; jj < 9; jj++)
+								N[ii][jj] = M[ii][jj];
+						N[i][j] = singleCand(*iter);
+						int result = analyseCand(N,true);
+						if(result == finished)
+						{
+							for(int ii = 0; ii < 9; ii++)
+								for(int jj = 0; jj < 9; jj++)
+									M[ii][jj] = N[ii][jj];
+							return finished;
+						}
+						else if(result == invalid)
+						{
+							M[i][j].erase(iter);
+							changed = true;
+							break;
+						}
+					}
+					
+				}
+				if(changed) break;
+			}
+			if(changed) break;
+		}
+	}
+	
 	} while(changed);
 	
-	return true;
+	if(it==0) return unchanged;
+	
+	for(int i = 0; i < 9; i++)
+		for(int j = 0; j < 9; j++)
+			if(M[i][j].size() > 1) return unfinished;
+
+	return finished;
 }
 
 void candToInteger(Cand M[9][9], int I[9][9])
@@ -307,6 +405,7 @@ int main()
 		}
 		cout << endl;
 	}
+	cin.get();
 	
 	return 0;
 }
