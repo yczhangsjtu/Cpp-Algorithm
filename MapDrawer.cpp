@@ -1,3 +1,7 @@
+/*
+ * This program is designed to assist playing games involved with 2.5d grid
+ * mazes.
+ */
 #include <GL/freeglut.h>
 #include <cstring>
 #include <cstdio>

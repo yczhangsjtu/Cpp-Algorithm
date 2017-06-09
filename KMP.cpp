@@ -1,3 +1,6 @@
+/*
+ * The classical KMP algorithm for string match
+ */
 #include <cstdio>
 
 using namespace std;

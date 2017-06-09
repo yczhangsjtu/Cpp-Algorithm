@@ -166,6 +166,9 @@ int main()
 	char buf[10];
 	while(true)
 	{
+		/*
+		 * s is size (the length of a stick), buf is the string of numbers
+		 */
 		scanf("%d%s",&s,buf);
 		if(s == 0) break;
 		printLCD(s,buf);

@@ -1,3 +1,6 @@
+/*
+ * Glue one image to another, either horizontally or vertically
+ */
 #include <cstdio>
 #include <cmath>
 #include <cstdlib>

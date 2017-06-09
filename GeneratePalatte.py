@@ -1,3 +1,5 @@
+# A tool to generate palatte file for game given r,g,b
+
 import sys
 
 palatte = [

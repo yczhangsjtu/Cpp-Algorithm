@@ -1,139 +1,17 @@
 # Cpp-Algorithm
 This is a collection of c++ programs each solving a specific problem.
 
---------------------------------------------------------------------------------
-Alien Numbers:
 
-Input:
-N (Number of cases)
-s (number) s1 (alphabeta 1) s2 (alphabeta 2)
+For those which use opencv, install opencv then compile by
 
-s is a number consisting of characters in alphabeta 1,
-transform it into a number in alphabeta 2.
+```
+$ sudo apt install libopencv-dev
+$ g++ ThinImage.cpp -lopencv_core -lopencv_highgui -lopencv_imgproc
+```
 
-For example, s=a0, s1=0123456789abcdef, s2=0123456789,
-this is simply translation from hex to decimal.
+For those which use glut, install freeglut then compile by
 
---------------------------------------------------------------------------------
-Date:
-
-A one-to-one correlation between dates and integers in a large scale.
-
---------------------------------------------------------------------------------
-Bit Int:
-
-An implementation of unlimit size integer class.
-
---------------------------------------------------------------------------------
-Inverse:
-
-Merge sort counting the number of inverses.
-
---------------------------------------------------------------------------------
-Max Subsequence:
-
-Find the subsequence in an integer array that has the largest summation.
-
---------------------------------------------------------------------------------
-Number of All Wrong Permutations:
-
-Count the number of all wrong permutations.
-
---------------------------------------------------------------------------------
-Fibonacci
-
---------------------------------------------------------------------------------
-Triangle:
-
-Judge properties of a triangle.
-
---------------------------------------------------------------------------------
-Trie Tree:
-
-A special tree for looking up English dictionary.
-
---------------------------------------------------------------------------------
-Find Maximal Sum Submatrix:
-
-Input a matrix, find the submatrix of given size that has maximal summation.
-
---------------------------------------------------------------------------------
-Fill the box:
-
-Something in a square grid box spread one step at a time.
-How long does it take to fill a box?
-
---------------------------------------------------------------------------------
-Find max subsequence II:
-
-Find max subsequence that has at least two elements.
-
---------------------------------------------------------------------------------
-Summation of Money:
-
-Use integers to sum two two-digits floats.
-
---------------------------------------------------------------------------------
-Count days:
-
-Count the number of days in a period of time that is not Saturday, Sunday,
-National Day, Labour's Day, or New Year's Day.
-
---------------------------------------------------------------------------------
-Complex Number:
-
-Complex number class.
-
---------------------------------------------------------------------------------
-Infinite Knapsack problem
-
---------------------------------------------------------------------------------
-Infinite addition
-
---------------------------------------------------------------------------------
-Infinite multiplication
-
---------------------------------------------------------------------------------
-Parenthesis match
-
---------------------------------------------------------------------------------
-if then else begin end
-
-Judge if a sequence of "if then else begin end" is legal.
-
---------------------------------------------------------------------------------
-Time in line:
-
-Count the number of minutes people have to wait in line.
-
---------------------------------------------------------------------------------
-Max number of Bit-Small match:
-
-Input two sequences An and Bn, find the maximal number of pairs (ak,bk)
-such that ak > bk.
-
---------------------------------------------------------------------------------
-Binary Tree in array:
-
-Calculate the position of an element in a binary tree stored in array.
-Post-order traverse.
-
---------------------------------------------------------------------------------
-Stack Change Order:
-
-Given a stack of limited size, decide whether a pop order is possible.
-
---------------------------------------------------------------------------------
-Sparse Matrix:
-
-Read a sparse matrix, do some row and column exchange, query some elements.
-
---------------------------------------------------------------------------------
-KMP Algorithm:
-
-Algorithm to search all the occurrences of a substring in a larger string.
-
---------------------------------------------------------------------------------
-AVL Tree
-
---------------------------------------------------------------------------------
+```
+$ sudo apt install freeglut3-dev
+$ g++ ConvexHull.cpp -lGL -lGLU -lglut
+```

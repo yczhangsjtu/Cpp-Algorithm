@@ -51,11 +51,11 @@ void freeImageData(ImageData *imageData)
 
 void usage()
 {
-	fprintf(stderr,"Usage: shpreader -i inputfile -o outputfile [options]");
-	fprintf(stderr,"\t-v verbose mode");
-	fprintf(stderr,"\t-p filename palatte file");
-	fprintf(stderr,"\t-s from");
-	fprintf(stderr,"\t-s to");
+	fprintf(stderr,"Usage: shpreader -i inputfile -o outputfile [options]\n");
+	fprintf(stderr,"\t-v verbose mode\n");
+	fprintf(stderr,"\t-p filename palatte file\n");
+	fprintf(stderr,"\t-s from\n");
+	fprintf(stderr,"\t-e to\n");
 	exit(1);
 }
 
@@ -352,7 +352,7 @@ int main(int argc, char *argv[])
 	Y = fileHeader.height;
 	if(debug)
 		printf("Output image size: %d x %d\n",X,Y);
-	data = malloc(X * Y * 4);
+	data = (BYTE*) malloc(X * Y * 4);
 	if(!data) perror("Memory allocation failed.");
 	
 	for(k = from; k < to; k++)

@@ -1,3 +1,8 @@
+/*
+ * Given a set of segments, find out all the intersection points.
+ * The naive method is for each pair of segments find the intersection.
+ * This program demonstrates a more efficient algorithm scanning the segments.
+ */
 #include <GL/freeglut.h>
 #include <iostream>
 #include <cmath>
@@ -24,198 +29,198 @@ double ey;
 
 class Point
 {
-public:
-	Point(double x,double y)
-	{
-		_x = x;
-		_y = y;
-		_valid = true;
-	}
-	Point(const Point& p)
-	{
-		_x = p._x;
-		_y = p._y;
-		_valid = p._valid;
-	}
-	Point(bool v)
-	{
-		_x = 0.0;
-		_y = 0.0;
-		_valid = v;
-	}
-	bool isvalid() const {return _valid;}
+	public:
+		Point(double x,double y)
+		{
+			_x = x;
+			_y = y;
+			_valid = true;
+		}
+		Point(const Point& p)
+		{
+			_x = p._x;
+			_y = p._y;
+			_valid = p._valid;
+		}
+		Point(bool v)
+		{
+			_x = 0.0;
+			_y = 0.0;
+			_valid = v;
+		}
+		bool isvalid() const {return _valid;}
 
-	bool operator< (const Point& p) const
-	{
-		if(_y < p._y) return true;
-		if(_y == p._y) return _x < p._x;
-		return false;
-	}
-	
-	double x() const { return _x; }
-	double y() const { return _y; }
+		bool operator< (const Point& p) const
+		{
+			if(_y < p._y) return true;
+			if(_y == p._y) return _x < p._x;
+			return false;
+		}
 
-private:
-	double _x;
-	double _y;
-	bool _valid;
+		double x() const { return _x; }
+		double y() const { return _y; }
+
+	private:
+		double _x;
+		double _y;
+		bool _valid;
 };
 
 class Segment
 {
-public:
-	Segment(double x1, double y1, double x2, double y2)
-	:_p1(x1,y1),_p2(x2,y2)
-	{
-		if(_p1 < _p2)
+	public:
+		Segment(double x1, double y1, double x2, double y2)
+			:_p1(x1,y1),_p2(x2,y2)
 		{
+			if(_p1 < _p2)
+			{
+			}
+			else
+			{
+				Point tmp = _p1;
+				_p1 = _p2;
+				_p2 = tmp;
+			}
 		}
-		else
-		{
-			Point tmp = _p1;
-			_p1 = _p2;
-			_p2 = tmp;
-		}
-	}
 
-	bool operator<(const Segment& s) const
-	{
-		double x1 = _p1.x();
-		double y1 = _p1.y();
-		double x2 = _p2.x();
-		double y2 = _p2.y();
-		double X1 = s.x1();
-		double Y1 = s.y1();
-		double X2 = s.x2();
-		double Y2 = s.y2();
-		double mx = x1;
-		double mX = X1;
-		if(y1 == y2)
+		bool operator<(const Segment& s) const
 		{
-			if(ey != y1) return false;
+			double x1 = _p1.x();
+			double y1 = _p1.y();
+			double x2 = _p2.x();
+			double y2 = _p2.y();
+			double X1 = s.x1();
+			double Y1 = s.y1();
+			double X2 = s.x2();
+			double Y2 = s.y2();
+			double mx = x1;
+			double mX = X1;
+			if(y1 == y2)
+			{
+				if(ey != y1) return false;
+			}
+			else
+			{
+				double l = (ey-y1)/(y2-y1);
+				mx = x1 + l*(x2-x1);
+			}
+			if(Y1 == Y2)
+			{
+				if(ey != Y1) return false;
+			}
+			else
+			{
+				double l = (ey-Y1)/(Y2-Y1);
+				mX = X1 + l*(X2-X1);
+			}
+			if(mx < mX) return true;
+			if(mx > mX) return false;
+			if(y1 == y2 || Y1 == Y2) return false;
+			mx += (x2-x1)/(y2-y1);
+			mX += (X2-X1)/(Y2-Y1);
+			if(mx <= mX) return true;
+			if(mx > mX) return false;
 		}
-		else
-		{
-			double l = (ey-y1)/(y2-y1);
-			mx = x1 + l*(x2-x1);
-		}
-		if(Y1 == Y2)
-		{
-			if(ey != Y1) return false;
-		}
-		else
-		{
-			double l = (ey-Y1)/(Y2-Y1);
-			mX = X1 + l*(X2-X1);
-		}
-		if(mx < mX) return true;
-		if(mx > mX) return false;
-		if(y1 == y2 || Y1 == Y2) return false;
-		mx += (x2-x1)/(y2-y1);
-		mX += (X2-X1)/(Y2-Y1);
-		if(mx <= mX) return true;
-		if(mx > mX) return false;
-	}
 
-	Point intersection(const Segment& s) const
-	{
-		double x1 = _p1.x();
-		double y1 = _p1.y();
-		double x2 = _p2.x();
-		double y2 = _p2.y();
-		double X1 = s.x1();
-		double Y1 = s.y1();
-		double X2 = s.x2();
-		double Y2 = s.y2();
-		double d = (x2-x1)*(Y2-Y1)-(y2-y1)*(X2-X1);
-		if(d == 0) return Point(false);
-		double l1 = ((X1-x1)*(Y2-Y1)-(Y1-y1)*(X2-X1))/d;
-		double l2 = ((X1-x1)*(y2-y1)-(Y1-y1)*(x2-x1))/d;
-		if(l1 < 0 || l1 > 1 || l2 < 0 || l2 > 1) return Point(false);
-		return Point(x1+l1*(x2-x1),y1+l1*(y2-y1));
-	}
-
-	void setStat(Iter iter) {_stat = iter;}
-	Iter stat() const {return _stat;}
-	Iter next() const 
-	{
-		Iter iter = _stat;
-		if(iter != status.end())
+		Point intersection(const Segment& s) const
 		{
-			iter++;
-			return iter;
+			double x1 = _p1.x();
+			double y1 = _p1.y();
+			double x2 = _p2.x();
+			double y2 = _p2.y();
+			double X1 = s.x1();
+			double Y1 = s.y1();
+			double X2 = s.x2();
+			double Y2 = s.y2();
+			double d = (x2-x1)*(Y2-Y1)-(y2-y1)*(X2-X1);
+			if(d == 0) return Point(false);
+			double l1 = ((X1-x1)*(Y2-Y1)-(Y1-y1)*(X2-X1))/d;
+			double l2 = ((X1-x1)*(y2-y1)-(Y1-y1)*(x2-x1))/d;
+			if(l1 < 0 || l1 > 1 || l2 < 0 || l2 > 1) return Point(false);
+			return Point(x1+l1*(x2-x1),y1+l1*(y2-y1));
 		}
-		return status.end();
-	}
-	Iter prev() const
-	{
-		Iter iter = _stat;
-		if(iter != status.begin())
-		{
-			iter --;
-			return iter;
-		}
-		return status.end();
-	}
 
-	double x1() const {return _p1.x();}
-	double y1() const {return _p1.y();}
-	double x2() const {return _p2.x();}
-	double y2() const {return _p2.y();}
-private:
-	Point _p1;
-	Point _p2;
-	Iter _stat;
+		void setStat(Iter iter) {_stat = iter;}
+		Iter stat() const {return _stat;}
+		Iter next() const 
+		{
+			Iter iter = _stat;
+			if(iter != status.end())
+			{
+				iter++;
+				return iter;
+			}
+			return status.end();
+		}
+		Iter prev() const
+		{
+			Iter iter = _stat;
+			if(iter != status.begin())
+			{
+				iter --;
+				return iter;
+			}
+			return status.end();
+		}
+
+		double x1() const {return _p1.x();}
+		double y1() const {return _p1.y();}
+		double x2() const {return _p2.x();}
+		double y2() const {return _p2.y();}
+	private:
+		Point _p1;
+		Point _p2;
+		Iter _stat;
 };
 
 class PSeg
 {
-public:
-	PSeg(Segment* s)
-	{
-		_s = s;
-	}
-	Segment* s() const { return _s; }
-	bool operator< (const PSeg& p) const
-	{
-		return *_s < *p._s;
-	}
-	bool operator== (const PSeg& p) const
-	{
-		return _s == p._s;
-	}
-private:
-	Segment* _s;
+	public:
+		PSeg(Segment* s)
+		{
+			_s = s;
+		}
+		Segment* s() const { return _s; }
+		bool operator< (const PSeg& p) const
+		{
+			return *_s < *p._s;
+		}
+		bool operator== (const PSeg& p) const
+		{
+			return _s == p._s;
+		}
+	private:
+		Segment* _s;
 };
 
 class EventPoint
 {
-public:
-	EventPoint(double x, double y)
-	:_p(x,y)
-	{ }
-	Point p() const {return _p;}
-	double x() const {return _p.x();}
-	double y() const {return _p.y();}
-	void addLowers(PSeg s) {_lowers.push_back(s);}
-	void addUppers(PSeg s) {_uppers.push_back(s);}
-	void addMiddle(PSeg s) {_middle.push_back(s);}
-	int lowerNum() const {return _lowers.size();}
-	int upperNum() const {return _uppers.size();}
-	int middleNum() const {return _middle.size();}
-	PSeg lower(int i) const {assert(i>=0 && i<_lowers.size());return _lowers.at(i);}
-	PSeg upper(int i) const {assert(i>=0 && i<_uppers.size());return _uppers.at(i);}
-	PSeg middle(int i) const {assert(i>=0 && i<_middle.size());return _middle.at(i);}
+	public:
+		EventPoint(double x, double y)
+			:_p(x,y)
+		{ }
+		Point p() const {return _p;}
+		double x() const {return _p.x();}
+		double y() const {return _p.y();}
+		void addLowers(PSeg s) {_lowers.push_back(s);}
+		void addUppers(PSeg s) {_uppers.push_back(s);}
+		void addMiddle(PSeg s) {_middle.push_back(s);}
+		int lowerNum() const {return _lowers.size();}
+		int upperNum() const {return _uppers.size();}
+		int middleNum() const {return _middle.size();}
+		PSeg lower(int i) const {assert(i>=0 && i<_lowers.size());return _lowers.at(i);}
+		PSeg upper(int i) const {assert(i>=0 && i<_uppers.size());return _uppers.at(i);}
+		PSeg middle(int i) const {assert(i>=0 && i<_middle.size());return _middle.at(i);}
 
-	bool operator< (const EventPoint& p) const
-	{
-		return _p < p._p;
-	}
-private:
-	Point _p;
-	vector<PSeg> _lowers;
-	vector<PSeg> _uppers;
-	vector<PSeg> _middle;
+		bool operator< (const EventPoint& p) const
+		{
+			return _p < p._p;
+		}
+	private:
+		Point _p;
+		vector<PSeg> _lowers;
+		vector<PSeg> _uppers;
+		vector<PSeg> _middle;
 };
 
 double Random(double a, double b)
@@ -239,7 +244,7 @@ Segment randSeg()
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	
+
 	glColor3f(0.0,0.0,0.0);
 	glPointSize(5.0);
 	glBegin(GL_LINES);
@@ -277,23 +282,23 @@ void display()
 	glVertex2f(sclLeft,ey);
 	glVertex2f(sclRight,ey);
 	glEnd();
-	
+
 	glutSwapBuffers();
 }
 
 void reshape(int w, int h)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    if (w <= h)
-        gluOrtho2D(sclLeft, sclRight, sclBottom * (GLfloat) h / (GLfloat) w,
-            sclTop * (GLfloat) h / (GLfloat) w);
-    else
-        gluOrtho2D(sclLeft * (GLfloat) w / (GLfloat) h,
-            sclRight * (GLfloat) w / (GLfloat) h, sclBottom, sclTop);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (w <= h)
+		gluOrtho2D(sclLeft, sclRight, sclBottom * (GLfloat) h / (GLfloat) w,
+				sclTop * (GLfloat) h / (GLfloat) w);
+	else
+		gluOrtho2D(sclLeft * (GLfloat) w / (GLfloat) h,
+				sclRight * (GLfloat) w / (GLfloat) h, sclBottom, sclTop);
 
-    glMatrixMode(GL_MODELVIEW);
-    glViewport(0, 0, w, h);
+	glMatrixMode(GL_MODELVIEW);
+	glViewport(0, 0, w, h);
 }
 
 set<EventPoint> Q;
@@ -394,8 +399,8 @@ void menu(int id)
 {
 	switch(id)
 	{
-	case 0:
-		std::exit(0);
+		case 0:
+			std::exit(0);
 	}
 }
 
@@ -409,14 +414,14 @@ void myinit()
 	points.clear();
 	for(int i = 0; i < N; i++)
 		segments.push_back(randSeg());
-	#if 0
+#if 0
 	for(int i = 0; i < segments.size(); i++)
 		for(int j = i+1; j < segments.size(); j++)
 		{
 			Point p = segments.at(i).intersection(segments.at(j));
 			if(p.isvalid()) points.insert(p);
 		}
-	#endif
+#endif
 	for(int i = 0; i < segments.size(); i++)
 	{
 		EventPoint start(segments.at(i).x1(),segments.at(i).y1());
@@ -439,17 +444,17 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(1366, 750);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Window");
-    myinit();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyboard);
-    glutKeyboardUpFunc(keyboardUp);
+	myinit();
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboard);
+	glutKeyboardUpFunc(keyboardUp);
 	glutSpecialFunc(special);
 	glutSpecialUpFunc(specialUp);
 	glutMouseFunc(mouse);
 	glutCreateMenu(menu);
 	glutAddMenuEntry("Quit", 0);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
-    glutIdleFunc(idle);
-    glutMainLoop();
+	glutIdleFunc(idle);
+	glutMainLoop();
 }

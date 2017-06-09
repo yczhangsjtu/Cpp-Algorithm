@@ -1,3 +1,6 @@
+/*
+ * The classical method of counting inverse pairs by mergesort.
+ */
 #include <iostream>
 #include <vector>
 #include <algorithm>
