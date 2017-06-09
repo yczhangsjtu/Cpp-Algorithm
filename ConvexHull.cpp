@@ -130,7 +130,7 @@ void convexHull(vector<Point> ps, vector<Point>& rs)
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	
+
 	glColor3f(0.0,0.0,0.0);
 	glPointSize(3.0);
 	glBegin(GL_POINTS);
@@ -145,23 +145,23 @@ void display()
 		glVertex2f(ls.at(i).x,ls.at(i).y);
 	}
 	glEnd();
-		
+
 	glutSwapBuffers();
 }
 
 void reshape(int w, int h)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    if (w <= h)
-        gluOrtho2D(sclLeft, sclRight, sclBottom * (GLfloat) h / (GLfloat) w,
-            sclTop * (GLfloat) h / (GLfloat) w);
-    else
-        gluOrtho2D(sclLeft * (GLfloat) w / (GLfloat) h,
-            sclRight * (GLfloat) w / (GLfloat) h, sclBottom, sclTop);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (w <= h)
+		gluOrtho2D(sclLeft, sclRight, sclBottom * (GLfloat) h / (GLfloat) w,
+				sclTop * (GLfloat) h / (GLfloat) w);
+	else
+		gluOrtho2D(sclLeft * (GLfloat) w / (GLfloat) h,
+				sclRight * (GLfloat) w / (GLfloat) h, sclBottom, sclTop);
 
-    glMatrixMode(GL_MODELVIEW);
-    glViewport(0, 0, w, h);
+	glMatrixMode(GL_MODELVIEW);
+	glViewport(0, 0, w, h);
 }
 
 void keyboard(unsigned char keyCode, int x, int y)
@@ -188,8 +188,8 @@ void menu(int id)
 {
 	switch(id)
 	{
-	case 0:
-		std::exit(0);
+		case 0:
+			std::exit(0);
 	}
 }
 
@@ -212,17 +212,17 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(1366, 750);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Window");
-    myinit();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyboard);
-    glutKeyboardUpFunc(keyboardUp);
+	myinit();
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboard);
+	glutKeyboardUpFunc(keyboardUp);
 	glutSpecialFunc(special);
 	glutSpecialUpFunc(specialUp);
 	glutMouseFunc(mouse);
 	glutCreateMenu(menu);
 	glutAddMenuEntry("Quit", 0);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
-    glutIdleFunc(idle);
-    glutMainLoop();
+	glutIdleFunc(idle);
+	glutMainLoop();
 }

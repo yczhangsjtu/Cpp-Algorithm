@@ -1,3 +1,9 @@
+/*
+ * Count the number of permutations that is different from 12345...n
+ * This number is called the Euler function of n.
+ * Specifically, Euler(n) = n!(1-1/2!+1/3!-1/4!+...)
+ */
+
 #include <iostream>
 
 using namespace std;
